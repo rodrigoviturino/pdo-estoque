@@ -1,9 +1,9 @@
-<?php require_once 'classes/Categoria.php'; ?>
-<?php
+<?php require_once 'classes/Categoria.php'; 
+
     $categoria = new Categoria();
     $lista = $categoria->listar();
-?>
-<?php require_once 'cabecalho.php' ?>
+
+ require_once 'cabecalho.php' ?>
 
 <div class="row">
     <div class="col-md-12">

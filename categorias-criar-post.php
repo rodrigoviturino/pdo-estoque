@@ -4,8 +4,9 @@
 
     // Criando objeto
     $categoria = new Categoria();
-
-    $nome = $_POST['nome']; 
+            //aqui vai o campo que queremos pegar do formulario, pegamos o NAME do FORMULARIO
+    $nome = $_POST['nome'];  // Pegando o NAME do FORMULARIO
+    $categoria->nome = $nome;//Pegou o VALUE do INPUT do FORM e estamos GUARDANDO no ATRIBUTO DA CLASS 
     $categoria->inserir();
 
     // redireciona para esta pagina
