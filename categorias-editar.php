@@ -1,10 +1,15 @@
 <?php 
-    require_once 'classes/Categoria.php';
-
-    $categoria = new Categoria();
-    $id = $_GET['id']; // está PEGANDO o valor do link "/categorias-editar.php?id=<?php do botão EDITAR
-    $categoria->id = $id;//Pegando o ATRIBUTO DO OBJETO e guardando o resultado do ID DO BOTAO EDITAR CATEGORIA
+    require_once 'global.php';
+try {
+    // está PEGANDO o valor do link "/categorias-editar.php?id=<?php do botão EDITAR
+    $id = $_GET['id']; 
+    $categoria = new Categoria();   
+    //Pegando o ATRIBUTO DO OBJETO e guardando o resultado do ID DO BOTAO EDITAR CATEGORIA
+    $categoria->id = $id;
     $resultado = $categoria->carregar();
+} catch (Exception $e){
+    Erro::trataErro($e);
+}
 ?>
 
 <?php require_once 'cabecalho.php' ?>
@@ -13,12 +18,14 @@
         <h2>Editar Categoria</h2>
     </div>
 </div>
-<form action="#" method="post">
+<form action="categorias-editar-post.php" method="post">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="form-group">
                 <label for="nome">Nome da Categoria</label>
-                <input type="text" value="<?php echo $resultado['nome'] ?>" class="form-control" placeholder="Nome da Categoria">
+
+                 <input type="hidden" name ="id" value="<?php echo $categoria->id  ?>" class="form-control"> 
+                <input type="text" name="nome" value="<?php echo $categoria->nome ?>" class="form-control" placeholder="Nome da Categoria">
             </div>
             <input type="submit" class="btn btn-success btn-block" value="Salvar">
         </div>

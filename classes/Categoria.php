@@ -1,15 +1,23 @@
 <?php
 
-require_once('classes/Conexao.php');
-
 class Categoria {
     // Atributos para pode ter Acesso ou Setar
     public $id;
     public $nome;
 
+
+    // MÉTODOS
+    public function __construct($id = false){
+        if($id) {
+            $this->id = $id;
+            $this->carregar();
+        }
+
+    }
+
     public function listar() {
         $query = "SELECT id, nome FROM categorias";
-        $conexao = new PDO('mysql:host=127.0.0.1;dbname=estoque', 'root',''); // pegando a Classe e metodo do arquivo Conexao
+        $conexao = Conexao::pegarConexao(); // pegando a Classe e metodo do arquivo Conexao
         $resultado = $conexao->query($query);
         $lista = $resultado->fetchAll();
         return $lista;
@@ -17,19 +25,18 @@ class Categoria {
 
     public function carregar(){
         $query = "SELECT id, nome FROM categorias WHERE id = " . $this->id;
-        $conexao = new PDO('mysql:host=127.0.0.1;dbname=estoque', 'root','');
+        $conexao = Conexao::pegarConexao();
         $resultado = $conexao->query($query);
         $lista = $resultado->fetchAll();
             foreach ($lista as $linha) {
                 // com esse retorno, a PRIMEIRA LINHA que ele receber vai trazer
-                return $linha;
+               $this->nome = $linha['nome'];
             }
     }
 
-
     public function inserir() {
         $query = "INSERT INTO categorias (nome) VALUES ('" . $this->nome . "')";
-        $conexao = new PDO('mysql:host=127.0.0.1;dbname=estoque','root','');
+        $conexao = Conexao::pegarConexao();
         $conexao->exec($query);
     }
 
@@ -37,5 +44,12 @@ class Categoria {
         $query = "UPDATE categorias SET nome = '" . $this->nome . "' WHERE id = " . $this->id;
         $conexao = Conexao::pegarConexao();
         $conexao->exec($query);  
+    }
+
+ 
+    public function excluir(){
+        $query = "DELETE FROM categorias WHERE id = " . $this->id;
+        $conexao = Conexao::pegarConexao();
+        $conexao->exec($query);
     }
 }

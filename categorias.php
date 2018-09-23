@@ -1,7 +1,12 @@
-<?php require_once 'classes/Categoria.php'; 
+<?php require_once 'global.php'; 
 
+try {
     $categoria = new Categoria();
     $lista = $categoria->listar();
+} catch(Exception $e) {
+    Erro::trataErro($e);
+    exit;
+}
 
  require_once 'cabecalho.php' ?>
 
@@ -34,7 +39,7 @@
                         <td><a href="/categorias-detalhe.php" class="btn btn-link"><?php echo $linha['id'] ?></a></td>
                         <td><a href="/categorias-detalhe.php" class="btn btn-link"><?php echo $linha['nome'] ?></a></td>
                         <td><a href="/categorias-editar.php?id=<?php echo $linha['id']?>" class="btn btn-info">Editar</a></td>
-                        <td><a href="/categorias-excluir-post.php" class="btn btn-danger">Excluir</a></td>
+                        <td><a href="/categorias-excluir-post.php?id=<?php echo $linha['id'] ?>" class="btn btn-danger">Excluir</a></td>
                     </tr>
                 <?php endforeach ?>
             </tbody>
